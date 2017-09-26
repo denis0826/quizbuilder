@@ -8,7 +8,7 @@ from django.views import generic
 from .models import Quiz
 
 def index(request):
-    queryset = Quiz.published.all()
+    queryset = Quiz.objects.all()
 
     context = {
         'objects_quiz' : queryset,
