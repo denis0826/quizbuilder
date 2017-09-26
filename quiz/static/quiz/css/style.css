@@ -1,9 +1,14 @@
 body {
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 200px;
   background-color: #fdfdfd;
+  background-image: url(../images/color-splash.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;;
 }
-
+html{
+  height: 100%;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;
@@ -58,4 +63,46 @@ a.btn.btn-sm.btn-danger {
 }
 .logs {
     margin-top: 70px;
+}
+.form-horizontal span.helptext {
+  float: left;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #1ae2bf;
+}
+.form-horizontal p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: 14px;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.form-horizontal input.btn.btn-lg.btn-danger.btn-block {
+  float: left;
+  width: 150px;
+  height: 40px;
+  padding: 0px;
+}
+form.form-horizontal {
+  position: relative;
+  width: 470px;
+}
+form.form-horizontal ul.errorlist {
+  position: absolute;
+  color: red;
+  right: 10px;
+  padding: 0;
+  z-index: 200;
+  margin-top: 10px;
+  list-style: none;
+}
+.formreg{
+  margin: 0 auto;
+  width: 410px;
 }

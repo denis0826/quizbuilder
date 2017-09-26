@@ -10,19 +10,19 @@
     <title>Dynameyes | {{ title }} </title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'projects/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'quiz/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'projects/css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'projects/css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'quiz/css/style.css' %}" rel="stylesheet">
 
-    <script src="{% static 'projects/js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'quiz/js/jquery-3.2.1.slim.min.js' %}"></script>
 
   </head>
 
   <body>
 
     <div class="container">
+  
 
     {% block content %}
 
@@ -30,9 +30,8 @@
 
     </div> <!-- /container -->
 
-  <script src="{% static 'projects/js/popper.min.js' %}"></script>
-  <script src="{% static 'projects/js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'projects/js/bootstrap-datepicker.min.js' %}"></script>
-  <script src="{% static 'projects/js/main.js' %}"></script>
+  <script src="{% static 'quiz/js/popper.min.js' %}"></script>
+  <script src="{% static 'quiz/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'quiz/js/main.js' %}"></script>
   </body>
 </html>
