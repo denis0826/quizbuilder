@@ -54,3 +54,7 @@ def my_logout(request):
     except KeyError:
         pass
     return redirect('login')
+
+def quiz(request):
+    quiz = Quiz.objects.get(id=quiz_id)
+    return render(request, 'quiz.html', {'quiz': quiz})

@@ -6,14 +6,17 @@
     
     <!-- Jumbotron -->
     <div class="jumbotron">
-    <h1>Quizzes</h1>
-    <ul>
-        {% for obj in objects_quiz %}
-            <li>
-                {{ obj.quiz_title }}
-            </li>
-        {% endfor %}
-    </ul>
+        <h1>Quizzes</h1>
+        <ul>
+            {% for obj in objects_quiz %}
+                <li>
+                    <a href="/quiz/{{ obj.id }}">
+                        {{ obj.quiz_title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
     </div>
 
 

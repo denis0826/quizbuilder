@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Quiz(models.Model):
     quiz_title = models.CharField(max_length=200)
@@ -13,7 +13,7 @@ class Quiz(models.Model):
         verbose_name_plural = 'quizzes'
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz)
+    quiz = models.ForeignKey(Quiz, null=True)
     question_title = models.CharField(max_length=600, blank=False)
     
     def __str__(self):
@@ -27,3 +27,11 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_title
 
+class Session(models.Model):    
+    quiz = models.ForeignKey(Quiz, null=True)
+    exam_date = models.DateTimeField()
+    score = models.IntegerField()
+    user = models.ForeignKey(User)
+
+    def __str__(self):
+        return self.quiz.title
