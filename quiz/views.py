@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from .models import Quiz
+from .models import Quiz, Question
 
 
 def index(request):
@@ -54,10 +54,6 @@ def my_logout(request):
     return redirect('login')
 
 
-def quiz(request, quiz_id):
-    quizname = get_object_or_404(Quiz, pk=quiz_id)
-    context = {
-        'quiz': quizname,
-        'title': "Quiz"
-    }
-    return render(request, 'quiz.html', context)
+def quiz(request, pk):
+    quiz = Question.objects.filter(quiz=pk)
+    return render(request, 'quiz.html', {'quiz': quiz})
