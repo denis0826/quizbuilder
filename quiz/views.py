@@ -55,15 +55,6 @@ def my_logout(request):
     return redirect('login')
 
 
-def quiz(request, quiz_id):
-    quizname = get_object_or_404(Quiz, pk=quiz_id)
-    context = {
-        'quiz': quizname,
-        'title': "Quiz"
-    }
-    return render(request, 'quiz.html', context)
-
-
-class quizView(generic.DetailView):
+class QuizView(generic.DetailView):
     model = Quiz
     template_name = 'quiz.html'
