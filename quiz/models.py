@@ -22,21 +22,31 @@ class Question(models.Model):
         return self.question_title
 
 
-class Answer(models.Model):
+class Choice(models.Model):
     question = models.ForeignKey(Question)
     is_correct = models.BooleanField(default=False)
-    answer_title = models.CharField(max_length=500)
+    choice_title = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.answer_title
+        return self.choice_title
 
 
 class Session(models.Model):
-    quiz = models.ForeignKey(Answer, null=True)
+    quiz = models.ForeignKey(Quiz, null=True)
     exam_date = models.DateTimeField()
     score = models.IntegerField()
     user = models.ForeignKey(User)
-    user_number = models.IntegerField()
 
     def __str__(self):
         return self.quiz.title
+
+
+class Answer(models.Model):
+    choice_answer = models.ForeignKey(Choice)
+    question_answer = models.ForeignKey(Question)
+    user_answer = models.ForeignKey(User)
+    session_answer = models.ForeignKey(Session)
+    exam_date = models.DateTimeField('date taken', auto_now_add=True)
+
+    def __str__(self):
+        return self.choice_answer

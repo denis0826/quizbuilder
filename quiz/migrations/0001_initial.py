@@ -16,8 +16,15 @@ class Migration(migrations.Migration):
             name='Answer',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('exam_date', models.DateTimeField(auto_now_add=True, verbose_name=b'date taken')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Choice',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('is_correct', models.BooleanField(default=False)),
-                ('answer_title', models.CharField(max_length=500)),
+                ('choice_title', models.CharField(max_length=500)),
             ],
         ),
         migrations.CreateModel(
@@ -45,8 +52,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('exam_date', models.DateTimeField()),
                 ('score', models.IntegerField()),
-                ('user_number', models.IntegerField()),
-                ('quiz', models.ForeignKey(to='quiz.Answer', null=True)),
+                ('quiz', models.ForeignKey(to='quiz.Quiz', null=True)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -56,8 +62,28 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(to='quiz.Quiz', null=True),
         ),
         migrations.AddField(
-            model_name='answer',
+            model_name='choice',
             name='question',
             field=models.ForeignKey(to='quiz.Question'),
+        ),
+        migrations.AddField(
+            model_name='answer',
+            name='choice_answer',
+            field=models.ForeignKey(to='quiz.Choice'),
+        ),
+        migrations.AddField(
+            model_name='answer',
+            name='question_answer',
+            field=models.ForeignKey(to='quiz.Question'),
+        ),
+        migrations.AddField(
+            model_name='answer',
+            name='session_answer',
+            field=models.ForeignKey(to='quiz.Session'),
+        ),
+        migrations.AddField(
+            model_name='answer',
+            name='user_answer',
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]

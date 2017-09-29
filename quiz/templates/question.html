@@ -3,17 +3,15 @@
 {% block content %}
 
     {% include 'nav.html' %}
-    
+
     <!-- Jumbotron -->
     <div class="jumbotron">
-        <h1>{{ title }}</h1>
+    <h1>{{ title }}</h1>
 
     <ul>
-        {% for obj in quiz %}
+        {% for obj in questions %}
             <li>
-                <a href="/question/{{ obj.id }}">
-                    {{ obj.question_title }}
-                </a>
+                    {{ obj }}
             </li>
         {% endfor %}
     </ul>
