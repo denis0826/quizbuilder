@@ -6,18 +6,22 @@
 
     <!-- Jumbotron -->
     <div class="jumbotron">
-    <h1>{{ title }}</h1>
+         <form method="POST">{% csrf_token %}
+            <fieldset class="form-group">
+                <legend>{{ title }}</legend>
+                {% for obj in questions %}
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="choice"  id="choice-{{ obj.id }}" value="{{ obj.id }}">
+                            {{ obj }}
+                        </label>
+                    </div>
+                {% endfor %}
 
-    <ul>
-        {% for obj in questions %}
-            <li>
-                    {{ obj }}
-            </li>
-        {% endfor %}
-    </ul>
-
-
+            </fieldset>
+            <button type="submit" class="btn btn-danger">Save</button>
+            <a href="/quiz/{{ title.id }}" class="btn btn-info" role="button">Cancel</a>
+        </form>
     </div>
-
 
 {% endblock %}

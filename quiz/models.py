@@ -42,11 +42,10 @@ class Session(models.Model):
 
 
 class Answer(models.Model):
-    choice_answer = models.ForeignKey(Choice)
-    question_answer = models.ForeignKey(Question)
-    user_answer = models.ForeignKey(User)
-    session_answer = models.ForeignKey(Session)
-    exam_date = models.DateTimeField('date taken', auto_now_add=True)
+    question = models.ForeignKey(Question, null=True)
+    session = models.ForeignKey(Session, null=True)
+    chosen_answer = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=False)
 
     def __str__(self):
-        return self.choice_answer
+        return self.chosen_answer

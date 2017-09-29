@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
             name='Answer',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('exam_date', models.DateTimeField(auto_now_add=True, verbose_name=b'date taken')),
+                ('chosen_answer', models.IntegerField()),
+                ('date', models.DateField(auto_now_add=True, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -68,22 +69,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='answer',
-            name='choice_answer',
-            field=models.ForeignKey(to='quiz.Choice'),
-        ),
-        migrations.AddField(
-            model_name='answer',
-            name='question_answer',
+            name='question',
             field=models.ForeignKey(to='quiz.Question'),
         ),
         migrations.AddField(
             model_name='answer',
-            name='session_answer',
+            name='session',
             field=models.ForeignKey(to='quiz.Session'),
-        ),
-        migrations.AddField(
-            model_name='answer',
-            name='user_answer',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]

@@ -1,8 +1,10 @@
+from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.http import HttpResponseRedirect, HttpResponse
 
-from .models import Quiz, Question, Choice
+from .models import Quiz, Question, Choice, Answer
 
 
 def index(request):
@@ -67,6 +69,16 @@ def quiz(request, pk):
 def question(request, pk):
     questions = Choice.objects.filter(question=pk)
     question_title = Question.objects.get(id=pk)
+
+    if request.method == "POST":
+        date = timezone.now()
+        choice = request.POST['choice']
+
+        log = Answer.objects.create(chosen_answer=choice, date=date)
+        log.save()
+
+        return HttpResponseRedirect('/')
+
     context = {
         'questions': questions,
         'title': question_title,
