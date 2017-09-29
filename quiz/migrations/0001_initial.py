@@ -2,45 +2,61 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Choice',
+            name='Answer',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('is_correct', models.BooleanField(default=False)),
-                ('text', models.CharField(max_length=500)),
+                ('answer_title', models.CharField(max_length=500)),
             ],
         ),
         migrations.CreateModel(
             name='Question',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('text', models.CharField(max_length=600)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('question_title', models.CharField(max_length=600)),
             ],
         ),
         migrations.CreateModel(
             name='Quiz',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=200)),
-                ('pub_date', models.DateTimeField(verbose_name='date published')),
-                ('expiration', models.DateTimeField(verbose_name='expiration date')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('quiz_title', models.CharField(max_length=200)),
+                ('pub_date', models.DateTimeField(auto_now_add=True, verbose_name=b'date published')),
+                ('expiration', models.DateTimeField(verbose_name=b'expiration date')),
+            ],
+            options={
+                'verbose_name_plural': 'quizzes',
+            },
+        ),
+        migrations.CreateModel(
+            name='Session',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('exam_date', models.DateTimeField()),
+                ('score', models.IntegerField()),
+                ('user_number', models.IntegerField()),
+                ('quiz', models.ForeignKey(to='quiz.Answer', null=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='question',
             name='quiz',
-            field=models.ForeignKey(to='quiz.Quiz'),
+            field=models.ForeignKey(to='quiz.Quiz', null=True),
         ),
         migrations.AddField(
-            model_name='choice',
+            model_name='answer',
             name='question',
             field=models.ForeignKey(to='quiz.Question'),
         ),
