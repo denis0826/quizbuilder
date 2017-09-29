@@ -1,23 +1,21 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.views.generic import View
-from django.views import generic
 
 from .models import Quiz
+
 
 def index(request):
     queryset = Quiz.objects.all()
 
     context = {
-        'objects_quiz' : queryset,
-        'title': "Quiz Builder"
+        'objects_quiz': queryset,
+        'title': "Quiz Builder",
     }
     return render(request, 'index.html', context)
 
 
-def my_login(request):   
+def my_login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -55,10 +53,11 @@ def my_logout(request):
         pass
     return redirect('login')
 
+
 def quiz(request, quiz_id):
-    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    quizname = get_object_or_404(Quiz, pk=quiz_id)
     context = {
-        'quiz': quiz,
+        'quiz': quizname,
         'title': "Quiz"
     }
-    return render(request, 'quiz.html', context )
+    return render(request, 'quiz.html', context)

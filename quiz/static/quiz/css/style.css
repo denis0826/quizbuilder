@@ -1,9 +1,7 @@
 body {
   padding-top: 40px;
   padding-bottom: 200px;
-  background-color: #fdfdfd;
-  background-image: url(../images/color-splash.jpg);
-  background-repeat: no-repeat;
+  background: #fdfdfd url(../images/color-splash.jpg) no-repeat;
   background-size: cover;;
 }
 html{
@@ -14,13 +12,7 @@ html{
   padding: 15px;
   margin: 0 auto;
 }
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
+
 .form-signin .form-control {
   position: relative;
   height: auto;
@@ -49,29 +41,13 @@ h1{
   color: #e63f3f;
   text-transform: capitalize;
 }
-a.btn.btn-sm.btn-danger {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    border:0;
-    cursor: pointer;
-}
+
 .agenda-date .form-control{
     width:inherit;
     margin: 0;
     float: left;
 }
-.logs {
-    margin-top: 70px;
-}
-.form-horizontal span.helptext {
-  float: left;
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  color: #1ae2bf;
-}
+
 .form-horizontal p {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -87,21 +63,13 @@ h2 {
   float: left;
   width: 150px;
   height: 40px;
-  padding: 0px;
+  padding: 0;
 }
 form.form-horizontal {
   position: relative;
   width: 470px;
 }
-form.form-horizontal ul.errorlist {
-  position: absolute;
-  color: red;
-  right: 10px;
-  padding: 0;
-  z-index: 200;
-  margin-top: 10px;
-  list-style: none;
-}
+
 .formreg{
   margin: 0 auto;
   width: 410px;
