@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.views import generic
 
 from .models import Quiz
 
@@ -61,3 +62,8 @@ def quiz(request, quiz_id):
         'title': "Quiz"
     }
     return render(request, 'quiz.html', context)
+
+
+class quizView(generic.DetailView):
+    model = Quiz
+    template_name = 'quiz.html'
