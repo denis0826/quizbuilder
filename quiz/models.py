@@ -33,7 +33,7 @@ class Choice(models.Model):
 
 class Session(models.Model):
     quiz = models.ForeignKey(Quiz, null=True)
-    exam_date = models.DateTimeField()
+    exam_date = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField()
     user = models.ForeignKey(User)
 

@@ -75,7 +75,7 @@ def question(request, pk):
         choice = request.POST['choice']
 
         # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk)
-        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question=question_title.pk)
+        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk)
         obj.save()
 
         return HttpResponseRedirect('/')
