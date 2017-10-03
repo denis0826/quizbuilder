@@ -74,11 +74,8 @@ def question(request, pk):
     if request.method == "POST":
         choice = request.POST['choice']
 
-        try:
-            log = Answer.objects.get(chosen_answer=choice, question=question[0])
-        except Answer.DoesNotExist:
-            log = Answer.objects.create(chosen_answer=choice, question=question[0])
-            log.save()
+        log = Answer.objects.create(chosen_answer=choice, question=question_title.pk)
+        log.save()
 
         return HttpResponseRedirect('/')
 
