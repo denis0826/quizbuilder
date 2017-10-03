@@ -42,10 +42,9 @@ class Session(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, null=True)
+    question = models.ForeignKey(Question)
     session = models.ForeignKey(Session, null=True)
     chosen_answer = models.IntegerField()
-    date = models.DateTimeField(auto_now_add=True, null=True, blank=False)
 
     def __str__(self):
         return self.chosen_answer

@@ -66,16 +66,19 @@ def quiz(request, pk):
 
     return render(request, 'quiz.html', context)
 
+
 def question(request, pk):
     questions = Choice.objects.filter(question=pk)
     question_title = Question.objects.get(id=pk)
 
     if request.method == "POST":
-        date = timezone.now()
         choice = request.POST['choice']
 
-        log = Answer.objects.create(chosen_answer=choice, date=date)
-        log.save()
+        try:
+            log = Answer.objects.get(chosen_answer=choice, question=question[0])
+        except Answer.DoesNotExist:
+            log = Answer.objects.create(chosen_answer=choice, question=question[0])
+            log.save()
 
         return HttpResponseRedirect('/')
 
