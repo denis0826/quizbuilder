@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect, HttpResponse
 
-from .models import Quiz, Question, Choice, Answer
+from .models import Quiz, Question, Choice, Answer, QuizSession
 
 
 def index(request):
@@ -27,7 +27,7 @@ def my_login(request):
             login(request, user)
             return redirect('index')
         else:
-            return None
+            return redirect('login')
 
     else:
         return render(request, 'login.html', {})
@@ -70,12 +70,14 @@ def quiz(request, pk):
 def question(request, pk):
     questions = Choice.objects.filter(question=pk)
     question_title = Question.objects.get(id=pk)
+    session = Answer.objects.get(id=pk)
 
     if request.method == "POST":
         choice = request.POST['choice']
+        session_id = request.session.session_key
 
-        # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk)
-        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk)
+        # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk, session=session)
+        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session_id)
         obj.save()
 
         return HttpResponseRedirect('/')
@@ -83,6 +85,13 @@ def question(request, pk):
     context = {
         'questions': questions,
         'title': question_title,
+        'session': session,
     }
 
     return render(request, 'question.html', context)
+
+
+def results(request, sessionid):
+    session = get_object_or_404(QuizSession, id=sessionid)
+    return render(request, 'results.html', {'session': session})
+

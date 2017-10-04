@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include 'nav.html' %}
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h3>Score: {{ session.score }}</h3>
+    </div>
+
+{% endblock %}

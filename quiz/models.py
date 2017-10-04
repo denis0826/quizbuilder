@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 
 
 class Quiz(models.Model):
@@ -31,20 +32,21 @@ class Choice(models.Model):
         return self.choice_title
 
 
-class Session(models.Model):
-    quiz = models.ForeignKey(Quiz, null=True)
+class Answer(models.Model):
+    question = models.ForeignKey(Question)
+    session = models.ForeignKey(Session)
+    chosen_answer = models.IntegerField()
+
+    def __str__(self):
+        return self.chosen_answer
+
+
+class QuizSession(models.Model):
+    session = models.ForeignKey(Answer)
+    quiz = models.ForeignKey(Quiz)
     exam_date = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField()
     user = models.ForeignKey(User)
 
     def __str__(self):
         return self.quiz.title
-
-
-class Answer(models.Model):
-    question = models.ForeignKey(Question)
-    session = models.ForeignKey(Session, null=True)
-    chosen_answer = models.IntegerField()
-
-    def __str__(self):
-        return self.chosen_answer

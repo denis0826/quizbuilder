@@ -3,7 +3,6 @@
 {% block content %}
 
     {% include 'nav.html' %}
-
     <!-- Jumbotron -->
     <div class="jumbotron">
          <form method="POST">{% csrf_token %}
@@ -12,15 +11,21 @@
                 {% for obj in questions %}
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="choice"  id="choice-{{ obj.id }}" value="{{ obj.id }}">
+                            <input type="checkbox" class="form-check-input" name="choice"  id="choice-{{ obj.id }}" value="{{ obj.id }}"
+                                {% if session.session_id == request.session.session_key %}
+                                checked
+                                {% endif %}
+                            >
                             {{ obj }}
+
+
                         </label>
                     </div>
                 {% endfor %}
 
             </fieldset>
             <button type="submit" class="btn btn-danger">Save</button>
-            <a href="/quiz/{{ title.id }}" class="btn btn-info" role="button">Cancel</a>
+            <a href="/quiz/{{ title.quiz_id }}" class="btn btn-info" role="button">Cancel</a>
         </form>
     </div>
 

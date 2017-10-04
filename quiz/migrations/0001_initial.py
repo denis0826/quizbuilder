@@ -8,6 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('sessions', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -47,12 +48,13 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Session',
+            name='QuizSession',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('exam_date', models.DateTimeField()),
+                ('exam_date', models.DateTimeField(auto_now_add=True)),
                 ('score', models.IntegerField()),
-                ('quiz', models.ForeignKey(to='quiz.Quiz', null=True)),
+                ('quiz', models.ForeignKey(to='quiz.Quiz')),
+                ('session', models.ForeignKey(to='sessions.Session')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -74,6 +76,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='session',
-            field=models.ForeignKey(to='quiz.Session', null=True),
+            field=models.ForeignKey(to='quiz.QuizSession'),
         ),
     ]
