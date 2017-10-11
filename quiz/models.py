@@ -45,7 +45,7 @@ class QuizSession(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
-    session = models.ForeignKey(QuizSession)
+    session = models.ForeignKey(QuizSession, null=True)
     chosen_answer = models.IntegerField()
 
     def __str__(self):

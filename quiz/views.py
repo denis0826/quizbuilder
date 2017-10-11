@@ -87,14 +87,13 @@ def question(request, pk):
     questions = Choice.objects.filter(question_id=pk)
     question_title = Question.objects.get(id=pk)
     # user = request.user
-    session = get_object_or_404(QuizSession, id=pk)
+    session = QuizSession.objects.get(id=pk)
 
     if request.method == "POST":
         choice = request.POST['choice']
 
-        # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk, session=session)
-        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk,
-                                                    session=session.pk)
+        # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk,session=session.pk)
+        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session)
         obj.save()
 
         return HttpResponseRedirect('/')
