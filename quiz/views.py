@@ -57,8 +57,21 @@ def my_logout(request):
 
 
 def quiz(request, pk):
+
     quiz = Question.objects.filter(quiz=pk)
     quiz_title = Quiz.objects.get(id=pk)
+
+    if request.user.is_authenticated():
+        quiz_session = get_object_or_404(Quiz, id=pk)
+        user = request.user
+        session_save = QuizSession.objects.create(quiz=quiz_session, user=user.id, exam_date=timezone.now().date(), score=1)
+        correct = 0
+        wrong = 0
+        answers = {}
+        session_save.save()
+
+        return HttpResponse(session_save.id, status=200)
+
     context = {
         'quiz': quiz,
         'title': quiz_title,
@@ -67,32 +80,15 @@ def quiz(request, pk):
     return render(request, 'quiz.html', context)
 
 
-def session(request, pk):
-
-    if request.user.is_authenticated():
-        quiz_session = get_object_or_404(Quiz, id=pk)
-        # session_key = request.session.session_key
-        user = request.user
-        session_save = QuizSession(quiz=quiz_session, user=user.id, exam_date=timezone.now().date(), score=1)
-        correct = 0
-        wrong = 0
-        answers = {}
-        session_save.save()
-
-        return HttpResponse(session_save.id, status=200)
-
-
 def question(request, pk):
 
     questions = Choice.objects.filter(question_id=pk)
     question_title = Question.objects.get(id=pk)
-    # user = request.user
-    session = QuizSession.objects.get(id=pk)
+    session = QuizSession.objects.get(quiz=question_title.quiz)
 
     if request.method == "POST":
         choice = request.POST['choice']
 
-        # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk,session=session.pk)
         obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session)
         obj.save()
 
