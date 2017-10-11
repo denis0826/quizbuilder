@@ -64,13 +64,11 @@ def quiz(request, pk):
     if request.user.is_authenticated():
         quiz_session = get_object_or_404(Quiz, id=pk)
         user = request.user
-        session_save = QuizSession.objects.create(quiz=quiz_session, user=user.id, exam_date=timezone.now().date(), score=1)
+        session_save = QuizSession.objects.create(quiz=quiz_session, user_id=user.id, exam_date=timezone.now().date(), score=1)
         correct = 0
         wrong = 0
         answers = {}
         session_save.save()
-
-        return HttpResponse(session_save.id, status=200)
 
     context = {
         'quiz': quiz,
@@ -84,12 +82,12 @@ def question(request, pk):
 
     questions = Choice.objects.filter(question_id=pk)
     question_title = Question.objects.get(id=pk)
-    session = QuizSession.objects.get(quiz=question_title.quiz)
+    session = QuizSession.objects.get(id=pk)
 
     if request.method == "POST":
         choice = request.POST['choice']
 
-        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session)
+        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session.pk)
         obj.save()
 
         return HttpResponseRedirect('/')
