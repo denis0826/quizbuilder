@@ -67,17 +67,34 @@ def quiz(request, pk):
     return render(request, 'quiz.html', context)
 
 
+def session(request, pk):
+
+    if request.user.is_authenticated():
+        quiz_session = get_object_or_404(Quiz, id=pk)
+        # session_key = request.session.session_key
+        user = request.user
+        session_save = QuizSession(quiz=quiz_session, user=user.id, exam_date=timezone.now().date(), score=1)
+        correct = 0
+        wrong = 0
+        answers = {}
+        session_save.save()
+
+        return HttpResponse(session_save.id, status=200)
+
+
 def question(request, pk):
-    questions = Choice.objects.filter(question=pk)
+
+    questions = Choice.objects.filter(question_id=pk)
     question_title = Question.objects.get(id=pk)
-    session = Answer.objects.get(id=pk)
+    # user = request.user
+    session = get_object_or_404(QuizSession, id=pk)
 
     if request.method == "POST":
         choice = request.POST['choice']
-        session_id = request.session.session_key
 
         # log = Answer.objects.create(chosen_answer=choice, question=question_title.pk, session=session)
-        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session_id)
+        obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk,
+                                                    session=session.pk)
         obj.save()
 
         return HttpResponseRedirect('/')
@@ -85,7 +102,6 @@ def question(request, pk):
     context = {
         'questions': questions,
         'title': question_title,
-        'session': session,
     }
 
     return render(request, 'question.html', context)

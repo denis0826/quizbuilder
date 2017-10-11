@@ -32,17 +32,8 @@ class Choice(models.Model):
         return self.choice_title
 
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question)
-    session = models.ForeignKey(Session)
-    chosen_answer = models.IntegerField()
-
-    def __str__(self):
-        return self.chosen_answer
-
-
 class QuizSession(models.Model):
-    session = models.ForeignKey(Answer)
+    # session = models.ForeignKey(Session)
     quiz = models.ForeignKey(Quiz)
     exam_date = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField()
@@ -50,3 +41,14 @@ class QuizSession(models.Model):
 
     def __str__(self):
         return self.quiz.title
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question)
+    session = models.ForeignKey(QuizSession)
+    chosen_answer = models.IntegerField()
+
+    def __str__(self):
+        return self.chosen_answer
+
+

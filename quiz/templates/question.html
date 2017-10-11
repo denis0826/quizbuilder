@@ -4,6 +4,7 @@
 
     {% include 'nav.html' %}
     <!-- Jumbotron -->
+    {{ questions }}
     <div class="jumbotron">
          <form method="POST">{% csrf_token %}
             <fieldset class="form-group">
@@ -12,9 +13,6 @@
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="checkbox" class="form-check-input" name="choice"  id="choice-{{ obj.id }}" value="{{ obj.id }}"
-                                {% if session.session_id == request.session.session_key %}
-                                checked
-                                {% endif %}
                             >
                             {{ obj }}
 
