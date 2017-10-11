@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('quiz', '0004_remove_quizsession_session'),
+        ('quiz', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='answer',
-            name='session',
-            field=models.ForeignKey(to='quiz.QuizSession', null=True),
+            model_name='quizsession',
+            name='exam_date',
+            field=models.DateTimeField(),
         ),
     ]

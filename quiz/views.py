@@ -65,11 +65,15 @@ def quiz(request, pk):
     if request.user.is_authenticated():
         quiz_session = get_object_or_404(Quiz, id=pk)
         user = request.user
-        session_save = QuizSession.objects.create(quiz=quiz_session, user_id=user.id, exam_date=timezone.now().date(), score=1)
+        obj, created = QuizSession.objects.update_or_create(quiz=quiz_session, user_id=user.id, exam_date=timezone.now().date())
         correct = 0
         wrong = 0
         answers = {}
-        session_save.save()
+
+        obj.answers = answers
+        obj.score = correct
+
+        obj.save()
 
     context = {
         'quiz': quiz,
@@ -83,7 +87,8 @@ def question(request, pk):
 
     questions = Choice.objects.filter(question_id=pk)
     question_title = Question.objects.get(id=pk)
-    session = QuizSession.objects.get(id=pk)
+    session = QuizSession.objects.get(quiz_id=question_title.quiz_id)
+    answers = Answer.objects.filter(question_id=pk)
 
     if request.method == "POST":
         choice = request.POST['choice']
@@ -96,12 +101,14 @@ def question(request, pk):
     context = {
         'questions': questions,
         'title': question_title,
+        'answers': answers,
+        'session': session,
     }
 
     return render(request, 'question.html', context)
 
 
-def results(request, sessionid):
-    session = get_object_or_404(QuizSession, id=sessionid)
+def results(request, session_id):
+    session = get_object_or_404(QuizSession, id=session_id)
     return render(request, 'results.html', {'session': session})
 
