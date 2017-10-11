@@ -7,16 +7,18 @@
     <!-- Jumbotron -->
     <div class="jumbotron">
         <h1>{{ title }}</h1>
-
-    <ul>
-        {% for obj in quiz %}
-            <li>
-                <a href="/question/{{ obj.id }}">
-                    {{ obj.question_title }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+    <form method="POST">{% csrf_token %}
+        <ul>
+            {% for obj in quiz %}
+                <li>
+                    <a href="/question/{{ obj.id }}">
+                        {{ obj.question_title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" class="btn btn-danger" value="Submit Answer">
+    </form>
 
 
     </div>

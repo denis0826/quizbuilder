@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 
 from .models import Quiz, Question, Choice, Answer, QuizSession
 
@@ -90,7 +91,7 @@ def question(request, pk):
         obj, created = Answer.objects.get_or_create(chosen_answer=choice, question_id=question_title.pk, session_id=session.pk)
         obj.save()
 
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse(quiz, args=(question_title.quiz_id,)))
 
     context = {
         'questions': questions,
